@@ -54,40 +54,17 @@ class: middle center
 - If f(x) is the density function of a random variable X, then the 100 `\((1 -\alpha)\)` HDR is the subset `\(R(f_\alpha)\)` of the sample space of X such that `\(R(f_\alpha) = \{x: f(x) \geq f_\alpha\}\)`, where `\(f_\alpha\)` is the largest constant such that `\(Pr(X \in R(f_\alpha)) \geq 1-\alpha)\)`.
 
 ---
+# Graphing HDRs using R package hdrcde
 
-# HDRs for visualizing multimodal datasets
-
-.pull-left[
-![](index_files/figure-html/hdrdensity-1.png)&lt;!-- --&gt;
-
-```
-## $hdr
-##         [,1]     [,2]     [,3]     [,4]
-## 95% 1.511303 2.512308 3.500000 5.079368
-## 50% 1.883000 2.040071 3.990617 4.745064
-## 
-## $mode
-## [1] 4.391364
-## 
-## $falpha
-##        5%       50% 
-## 0.1447533 0.3912654
-```
-]
-
-.pull-right[
-![](index_files/figure-html/hdr.boxplot-1.png)&lt;!-- --&gt;
-]
-
-no flexibility that comes with ggplot2
+![](images/hdrcde.png)&lt;!-- --&gt;
 
 ---
 
 # Extending ggplot2
 
+- HDR is a novel technique for summarizing distribution for which plotting is not implemented in ggplot2
 - ggplot2 creates graphics based on The Grammar of Graphics
 - graphics are built step by step by adding new elements that allows for extensive flexibility and customization of plots
-- HDR is a novel technique for summarizing distribution for which plotting is not implemented in ggplot2
 - need to extend the functionality of ggplot2
 
 ---
@@ -104,7 +81,7 @@ Hyndman](https://robjhyndman.com/)
 ]
 
 
-..pull-right[
+.pull-right[
 
 .animated.bounce[
 &lt;img src="images/gghdr_logo.png" height=280px&gt;

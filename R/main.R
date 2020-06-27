@@ -189,3 +189,7 @@ hdr.boxplot(faithful$eruptions)
 
 ##----authors
 knitr::include_graphics("images/authors.png")
+
+
+##----hdrcde
+knitr::include_graphics("images/hdrcde.png")
