@@ -52,6 +52,7 @@ class: center
 Why summarize?
 
 ---
+class: middle center
 
 # Graphing some summarizations
 
@@ -59,23 +60,13 @@ Why summarize?
 ```
 
 ---
+class: middle center
 
 # Boxplot not suitable for summarizing multi-modal distributions
 
-.left-column[
-.checked[
- - median (central tendency)
- - quartile deviation (spread)
-]
-.crossed[
-  - modes
-]
-]
 
-.right-column[
-```{r question1, out.width="60%"}
+```{r question1, out.height="100%"}
 ```
-]
 
 ---
 class: center middle
@@ -87,7 +78,7 @@ class: center middle
 
 ---
 
-# Highest Density Region plots
+# Highest Density Region (HDR) plots
 
 - The region should occupy the smallest possible volume in the sample space
 - Every point inside the region should have probability density at least as large as every point outside the region.
@@ -95,7 +86,7 @@ class: center middle
 
 ---
 
-# High-density regions (HDRs) for visualizing multimodal datasets
+# HDRs for visualizing multimodal datasets
 
 .pull-left[
 ```{r hdrdensity}
@@ -203,6 +194,7 @@ faithful %>%
 
 ]
 ---
+class: center middle
 
 # Keep combining - HDR box + jitter
 
@@ -224,6 +216,8 @@ faithful %>%
 ]
 
 ---
+class: center middle
+
 # Keep combining - HDR scatter + HDR marginal
 
 .pull-left[
@@ -242,3 +236,23 @@ ggplot(aes(x = waiting, y = eruptions)) +
 ]
 
 ---
+
+# Authors
+
+```{r authors}
+
+```
+
+---
+class: middle top
+
+#  More Information
+
+Package: https://github.com/ropenscilabs/gghdr  
+
+Slides: https://sayanigupta-useR2020.netlify.com/  
+
+Materials: https://github.com/Sayani07/useR2020    
+
+
+Slides created with <i> Rmarkdown, knitr, xaringan, xaringanthemer</i>

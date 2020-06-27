@@ -40,28 +40,19 @@ class: center
 Why summarize?
 
 ---
+class: middle center
 
 # Graphing some summarizations
 
 &lt;img src="index_files/figure-html/allplots-1.png" height="100%" /&gt;
 
 ---
+class: middle center
 
 # Boxplot not suitable for summarizing multi-modal distributions
 
-.left-column[
-.checked[
- - median (central tendency)
- - quartile deviation (spread)
-]
-.crossed[
-  - modes
-]
-]
 
-.right-column[
-&lt;img src="index_files/figure-html/question1-1.png" width="60%" /&gt;
-]
+&lt;img src="index_files/figure-html/question1-1.png" height="100%" /&gt;
 
 ---
 class: center middle
@@ -73,7 +64,7 @@ class: center middle
 
 ---
 
-# Highest Density Region plots
+# Highest Density Region (HDR) plots
 
 - The region should occupy the smallest possible volume in the sample space
 - Every point inside the region should have probability density at least as large as every point outside the region.
@@ -81,7 +72,7 @@ class: center middle
 
 ---
 
-# High-density regions (HDRs) for visualizing multimodal datasets
+# HDRs for visualizing multimodal datasets
 
 .pull-left[
 ![](index_files/figure-html/hdrdensity-1.png)&lt;!-- --&gt;
@@ -196,6 +187,7 @@ faithful %&gt;%
 
 ]
 ---
+class: center middle
 
 # Keep combining - HDR box + jitter
 
@@ -216,6 +208,8 @@ faithful %&gt;%
 ]
 
 ---
+class: center middle
+
 # Keep combining - HDR scatter + HDR marginal
 
 .pull-left[
@@ -233,6 +227,24 @@ ggplot(aes(x = waiting, y = eruptions)) +
 ]
 
 ---
+
+# Authors
+
+![](images/authors.png)&lt;!-- --&gt;
+
+---
+class: middle top
+
+#  More Information
+
+Package: https://github.com/ropenscilabs/gghdr  
+
+Slides: https://sayanigupta-useR2020.netlify.com/  
+
+Materials: https://github.com/Sayani07/useR2020    
+
+
+Slides created with &lt;i&gt; Rmarkdown, knitr, xaringan, xaringanthemer&lt;/i&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

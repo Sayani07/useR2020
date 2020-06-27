@@ -43,12 +43,11 @@ hdr.den(faithful$eruptions,
 
 hdr.boxplot(faithful$eruptions) 
 
-
 ##----geom-hdr-boxplot
 
 ggplot(data = faithful, 
        aes(y = eruptions)) + 
-  geom_hdr_boxplot(fill = c("blue")) +theme_remark()
+  geom_hdr_boxplot(fill = c("blue")) 
 
 
 ##----geom-hdr-box-jitter
@@ -188,3 +187,5 @@ library(hdrcde)
 hdr.boxplot(faithful$eruptions) 
 
 
+##----authors
+knitr::include_graphics("images/authors.png")
