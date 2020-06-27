@@ -1,9 +1,9 @@
 ---
 title: "gghdr: Graphing highest density regions <br> using grammar of graphics"
-subtitle: "Sayani Gupta"
-author: 
+author: "<br> Sayani Gupta <br> <i class='fab fa-github'></i> Sayani07 &nbsp; &nbsp; <i class='fab fa-twitter' style='color:#6CADDE'></i> SayaniGupta07 <br><font> https://sayanigupta-useR2020.netlify.com/</small>"
 email: "Sayani.Gupta@monash.edu"
 twitter: "SayaniGupta07"
+date:  useR 2020
 pdflink: ""
 bgimg: "images/grey-yellow.png"
 output:
@@ -19,6 +19,7 @@ output:
       - "assets/custom.css" # add your own CSS here!
       - "assets/demo.css" # this should be removed
       - "timeline.css"
+      - "libs/font-awesome/css/fontawesome-all.css"
     # [ "libs/myremark.css", "xaringan-themer.css" , "libs/font-awesome/css/fontawesome-all.css"]
     self_contained: false
     lib_dir: libs
@@ -63,9 +64,10 @@ class: middle center
 
 # Highest Density Region (HDR) plots
 
-- The region should occupy the smallest possible volume in the sample space
-- Every point inside the region should have probability density at least as large as every point outside the region.
-- If f(x) is the density function of a random variable X, then the 100 $(1 -\alpha)$ HDR is the subset $R(f_\alpha)$ of the sample space of X such that $R(f_\alpha) = \{x: f(x) \geq f_\alpha\}$, where $f_\alpha$ is the largest constant such that $Pr(X \in R(f_\alpha)) \geq 1-\alpha)$.
+<font size = 5> If $f(x)$ is the density function of a random variable $X$, then the 100 $(1 -\alpha)$ HDR is the subset $R(f_\alpha)$ of the sample space of $X$ such that $R(f_\alpha) = \{x: f(x) \geq f_\alpha\}$, where $f_\alpha$ is the largest constant such that $Pr(X \in R(f_\alpha)) \geq 1-\alpha)$.
+
+```{r falpha, out.width="80%"}
+```
 
 ---
 # Graphing HDRs using R package hdrcde

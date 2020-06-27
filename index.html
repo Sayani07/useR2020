@@ -3,7 +3,7 @@
   <head>
     <title>gghdr: Graphing highest density regions   using grammar of graphics</title>
     <meta charset="utf-8" />
-    <meta name="author" content="" />
+    <meta name="author" content="  Sayani Gupta    Sayani07      SayaniGupta07   https://sayanigupta-useR2020.netlify.com/" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
     <!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
@@ -17,13 +17,15 @@
     <link rel="stylesheet" href="assets/custom.css" type="text/css" />
     <link rel="stylesheet" href="assets/demo.css" type="text/css" />
     <link rel="stylesheet" href="timeline.css" type="text/css" />
+    <link rel="stylesheet" href="libs/font-awesome/css/fontawesome-all.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
 # gghdr: Graphing highest density regions <br> using grammar of graphics
-## Sayani Gupta
+### <br> Sayani Gupta <br> <i class='fab fa-github'></i> Sayani07     <i class='fab fa-twitter' style='color:#6CADDE'></i> SayaniGupta07 <br><font> <a href="https://sayanigupta-useR2020.netlify.com/" class="uri">https://sayanigupta-useR2020.netlify.com/</a></small>
+### useR 2020
 
 ---
 
@@ -49,9 +51,9 @@ class: middle center
 
 # Highest Density Region (HDR) plots
 
-- The region should occupy the smallest possible volume in the sample space
-- Every point inside the region should have probability density at least as large as every point outside the region.
-- If f(x) is the density function of a random variable X, then the 100 `\((1 -\alpha)\)` HDR is the subset `\(R(f_\alpha)\)` of the sample space of X such that `\(R(f_\alpha) = \{x: f(x) \geq f_\alpha\}\)`, where `\(f_\alpha\)` is the largest constant such that `\(Pr(X \in R(f_\alpha)) \geq 1-\alpha)\)`.
+&lt;font size = 5&gt; If `\(f(x)\)` is the density function of a random variable `\(X\)`, then the 100 `\((1 -\alpha)\)` HDR is the subset `\(R(f_\alpha)\)` of the sample space of `\(X\)` such that `\(R(f_\alpha) = \{x: f(x) \geq f_\alpha\}\)`, where `\(f_\alpha\)` is the largest constant such that `\(Pr(X \in R(f_\alpha)) \geq 1-\alpha)\)`.
+
+&lt;img src="images/falpha.png" width="80%" /&gt;
 
 ---
 # Graphing HDRs using R package hdrcde
@@ -190,7 +192,7 @@ ggplot(aes(x = waiting, y = eruptions)) +
 
 # Authors
 
-![](images/authors.png)&lt;!-- --&gt;
+![](images/authors1.png)&lt;!-- --&gt;
 
 ---
 class: middle top
