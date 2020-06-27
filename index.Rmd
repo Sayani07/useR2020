@@ -1,0 +1,244 @@
+---
+title: "gghdr: <br>Graphing highest density regions using grammar of graphics"
+subtitle: "Sayani Gupta"
+author: 
+date: "20th June 2020"
+email: "Sayani.Gupta@monash.edu"
+twitter: "SayaniGupta07"
+pdflink: ""
+bgimg: "images/grey-yellow.png"
+output:
+  xaringan::moon_reader:
+    after_body: ["libs/collapseoutput.js"]
+    css:
+      - ninjutsu 
+      - "assets/animate.css"
+      - "assets/monash-logo.css"
+      - "assets/monash-brand.css"
+      - "assets/monash-fonts.css"
+      - "assets/styles.css" # small improvements
+      - "assets/custom.css" # add your own CSS here!
+      - "assets/demo.css" # this should be removed
+      - "timeline.css"
+    # [ "libs/myremark.css", "xaringan-themer.css" , "libs/font-awesome/css/fontawesome-all.css"]
+    self_contained: false
+    lib_dir: libs
+    includes:
+      in_header: "assets/custom.html"
+    mathjax: "assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    nature:
+      ratio: 16:9
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning=FALSE, cache=TRUE,
+  dev.args=list(bg=grey(0.9), pointsize=11))
+
+knitr::read_chunk('R/main.R') 
+knitr::read_chunk('R/theme.R')
+```
+
+---
+class: center
+
+
+```{r load}
+
+```
+
+Why summarize?
+
+---
+
+# Graphing some summarizations
+
+```{r allplots,  out.height="100%"}
+```
+
+---
+
+# Boxplot not suitable for summarizing multi-modal distributions
+
+.left-column[
+.checked[
+ - median (central tendency)
+ - quartile deviation (spread)
+]
+.crossed[
+  - modes
+]
+]
+
+.right-column[
+```{r question1, out.width="60%"}
+```
+]
+
+---
+class: center middle
+
+# Options
+
+- plot entire prob distribution
+- plot only some region of the sample space
+
+---
+
+# Highest Density Region plots
+
+- The region should occupy the smallest possible volume in the sample space
+- Every point inside the region should have probability density at least as large as every point outside the region.
+- If f(x) is the density function of a random variable X, then the 100 $(1 -\alpha)$ HDR is the subset $R(f_\alpha)$ of the sample space of X such that $R(f_\alpha) = \{x: f(x) \geq f_\alpha\}$, where $f_\alpha$ is the largest constant such that $Pr(X \in R(f_\alpha)) \geq 1-\alpha)$.
+
+---
+
+# High-density regions (HDRs) for visualizing multimodal datasets
+
+.pull-left[
+```{r hdrdensity}
+```
+]
+
+.pull-right[
+```{r hdr.boxplot}
+```
+]
+
+no flexibility that comes with ggplot2
+
+---
+
+# Extending ggplot2
+
+- ggplot2 creates graphics based on The Grammar of Graphics
+- graphics are built step by step by adding new elements that allows for extensive flexibility and customization of plots
+- HDR is a novel technique for summarizing distribution for which plotting is not implemented in ggplot2
+- need to extend the functionality of ggplot2
+
+---
+class: middle top
+
+# Package gghdr
+
+.pull-left[
+
+- implement HDR plots in ggplot2 
+- key elements: *geom* and *stats*
+- inspired from R package [`hdrcde`](https://pkg.robjhyndman.com/hdrcde/) developed by [Rob
+Hyndman](https://robjhyndman.com/)
+]
+
+
+..pull-right[
+
+.animated.bounce[
+<img src="images/gghdr_logo.png" height=280px>
+]
+]
+
+
+---
+# HDR boxplots
+
+.pull-left[
+```r
+library(hdrcde)
+hdr.boxplot(faithful$eruptions) 
+```
+<br>
+
+```{r hdrcde-boxplot}
+
+```
+
+]
+
+.pull-right[
+
+```r
+library(gghdr)
+library(ggplot2)
+ggplot(faithful, aes(y = eruptions)) +
+  geom_hdr_boxplot()
+```
+
+```{r geom-hdr-boxplot}
+```
+]
+
+---
+
+# HDR rug plots and scatter plots
+
+
+.pull-left[
+
+```r
+faithful %>% 
+  ggplot(aes(x = waiting, 
+             y = eruptions)) + 
+  geom_hdr_rug(fill = "blue") + 
+  geom_point() 
+```
+
+```{r hdr-rug}
+```
+]
+
+.pull-right[
+
+```r
+faithful %>%
+  ggplot(aes(x = waiting,
+             y = eruptions)) +  
+  geom_point(aes(colour =  
+  hdr_bin(x = waiting,y = eruptions)))
+```
+  
+```{r hdr-scatter}
+```
+
+]
+---
+
+# Keep combining - HDR box + jitter
+
+.pull-left[
+
+```r
+faithful %>% 
+ ggplot(aes(y = eruptions)) + 
+*geom_hdr_boxplot(fill = c("blue")) + 
+*geom_jitter(aes(x = 0))
+```
+
+
+]
+
+.pull-right[
+```{r geom-hdr-box-jitter}
+```
+]
+
+---
+# Keep combining - HDR scatter + HDR marginal
+
+.pull-left[
+```r
+faithful %>% 
+ggplot(aes(x = waiting, y = eruptions)) +
+* geom_point(aes(colour = hdr_bin(x = waiting, y = eruptions)))+
+* geom_hdr_rug()
+```
+]
+
+.pull-right[
+
+```{r combo}
+```
+]
+
+---

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>gghdr:  Graphing highest density regions using grammar of graphics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> 
+    -->
+    <link rel="icon" href="images/favicon.ico"  type='image/x-icon'/>
+    <link rel="stylesheet" href="assets/animate.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-logo.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-brand.css" type="text/css" />
+    <link rel="stylesheet" href="assets/monash-fonts.css" type="text/css" />
+    <link rel="stylesheet" href="assets/styles.css" type="text/css" />
+    <link rel="stylesheet" href="assets/custom.css" type="text/css" />
+    <link rel="stylesheet" href="assets/demo.css" type="text/css" />
+    <link rel="stylesheet" href="timeline.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# gghdr: <br>Graphing highest density regions using grammar of graphics
+## Sayani Gupta
+### 20th June 2020
+
+---
+
+
+
+
+---
+class: center
+
+
+
+
+Why summarize?
+
+---
+
+# Graphing some summarizations
+
+&lt;img src="index_files/figure-html/allplots-1.png" height="100%" /&gt;
+
+---
+
+# Boxplot not suitable for summarizing multi-modal distributions
+
+.left-column[
+.checked[
+ - median (central tendency)
+ - quartile deviation (spread)
+]
+.crossed[
+  - modes
+]
+]
+
+.right-column[
+&lt;img src="index_files/figure-html/question1-1.png" width="60%" /&gt;
+]
+
+---
+class: center middle
+
+# Options
+
+- plot entire prob distribution
+- plot only some region of the sample space
+
+---
+
+# Highest Density Region plots
+
+- The region should occupy the smallest possible volume in the sample space
+- Every point inside the region should have probability density at least as large as every point outside the region.
+- If f(x) is the density function of a random variable X, then the 100 `\((1 -\alpha)\)` HDR is the subset `\(R(f_\alpha)\)` of the sample space of X such that `\(R(f_\alpha) = \{x: f(x) \geq f_\alpha\}\)`, where `\(f_\alpha\)` is the largest constant such that `\(Pr(X \in R(f_\alpha)) \geq 1-\alpha)\)`.
+
+---
+
+# High-density regions (HDRs) for visualizing multimodal datasets
+
+.pull-left[
+![](index_files/figure-html/hdrdensity-1.png)&lt;!-- --&gt;
+
+```
+## $hdr
+##         [,1]     [,2]     [,3]     [,4]
+## 95% 1.511303 2.512308 3.500000 5.079368
+## 50% 1.883000 2.040071 3.990617 4.745064
+## 
+## $mode
+## [1] 4.391364
+## 
+## $falpha
+##        5%       50% 
+## 0.1447533 0.3912654
+```
+]
+
+.pull-right[
+![](index_files/figure-html/hdr.boxplot-1.png)&lt;!-- --&gt;
+]
+
+no flexibility that comes with ggplot2
+
+---
+
+# Extending ggplot2
+
+- ggplot2 creates graphics based on The Grammar of Graphics
+- graphics are built step by step by adding new elements that allows for extensive flexibility and customization of plots
+- HDR is a novel technique for summarizing distribution for which plotting is not implemented in ggplot2
+- need to extend the functionality of ggplot2
+
+---
+class: middle top
+
+# Package gghdr
+
+.pull-left[
+
+- implement HDR plots in ggplot2 
+- key elements: *geom* and *stats*
+- inspired from R package [`hdrcde`](https://pkg.robjhyndman.com/hdrcde/) developed by [Rob
+Hyndman](https://robjhyndman.com/)
+]
+
+
+..pull-right[
+
+.animated.bounce[
+&lt;img src="images/gghdr_logo.png" height=280px&gt;
+]
+]
+
+
+---
+# HDR boxplots
+
+.pull-left[
+```r
+library(hdrcde)
+hdr.boxplot(faithful$eruptions) 
+```
+&lt;br&gt;
+
+![](index_files/figure-html/hdrcde-boxplot-1.png)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+```r
+library(gghdr)
+library(ggplot2)
+ggplot(faithful, aes(y = eruptions)) +
+  geom_hdr_boxplot()
+```
+
+![](index_files/figure-html/geom-hdr-boxplot-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# HDR rug plots and scatter plots
+
+
+.pull-left[
+
+```r
+faithful %&gt;% 
+  ggplot(aes(x = waiting, 
+             y = eruptions)) + 
+  geom_hdr_rug(fill = "blue") + 
+  geom_point() 
+```
+
+![](index_files/figure-html/hdr-rug-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+faithful %&gt;%
+  ggplot(aes(x = waiting,
+             y = eruptions)) +  
+  geom_point(aes(colour =  
+  hdr_bin(x = waiting,y = eruptions)))
+```
+  
+![](index_files/figure-html/hdr-scatter-1.png)&lt;!-- --&gt;
+
+]
+---
+
+# Keep combining - HDR box + jitter
+
+.pull-left[
+
+```r
+faithful %&gt;% 
+ ggplot(aes(y = eruptions)) + 
+*geom_hdr_boxplot(fill = c("blue")) + 
+*geom_jitter(aes(x = 0))
+```
+
+
+]
+
+.pull-right[
+![](index_files/figure-html/geom-hdr-box-jitter-1.png)&lt;!-- --&gt;
+]
+
+---
+# Keep combining - HDR scatter + HDR marginal
+
+.pull-left[
+```r
+faithful %&gt;% 
+ggplot(aes(x = waiting, y = eruptions)) +
+* geom_point(aes(colour = hdr_bin(x = waiting, y = eruptions)))+
+* geom_hdr_rug()
+```
+]
+
+.pull-right[
+
+![](index_files/figure-html/combo-1.png)&lt;!-- --&gt;
+]
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'assets/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
