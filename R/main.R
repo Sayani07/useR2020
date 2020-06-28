@@ -24,7 +24,7 @@ library(ggplot2)
 set.seed(12000)
 norm <- rnorm(1000, 30, 10)
 par(mfrow = c(2, 3))
-p1 <- plot(density(norm))
+p1 <- density(norm) %>% ggplot() + geom_density()
 p2 <- plot(density(acidity*5))
 p3 <- plot(density(chondrite))
 
@@ -197,3 +197,15 @@ knitr::include_graphics("images/hdrcde.png")
 
 ##----falpha
 knitr::include_graphics("images/falpha.png")
+
+##----print-data
+faithful %>% as_tibble()
+
+##----faithful-density
+
+p1 <- ggplot(data = faithful, aes(x = eruptions)) + geom_density() + theme_remark()
+
+p2 <- ggplot(data = faithful, aes(y = eruptions)) + 
+  geom_boxplot() + theme_remark() 
+
+ggarrange(p1, p2, nrow = 2, ncol = 1)
