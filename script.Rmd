@@ -35,6 +35,7 @@ Highest density regions in these cases are one of the the most appropriate subse
 Explain HDR
 
 
+something
 # Slide 5
 
 The R package hdrcde authored by Rob Hyndman provides tools for computing highest density regions in one and two dimensions. We illustrate this by exploring the data set faithful which contains the waiting time and duration of eruptions for the old faithful geyser in the Yellowstone National Park, USA.
