@@ -22,9 +22,9 @@ library(ggplot2)
 
 ##----question1
 set.seed(12000)
-norm <- rnorm(1000, 30, 10)
 par(mfrow = c(2, 3))
-p1 <- density(norm) %>% ggplot() + geom_density()
+norm <- rnorm(1000, 30, 10)
+p1 <- plot(density(norm))
 p2 <- plot(density(acidity*5))
 p3 <- plot(density(chondrite))
 
@@ -209,3 +209,11 @@ p2 <- ggplot(data = faithful, aes(y = eruptions)) +
   geom_boxplot() + theme_remark() 
 
 ggarrange(p1, p2, nrow = 2, ncol = 1)
+
+##----allplotspng
+
+knitr::include_graphics("images/allplots.png")
+
+##----question1png
+
+knitr::include_graphics("images/question1.png")

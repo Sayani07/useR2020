@@ -46,9 +46,9 @@ knitr::read_chunk('R/theme.R')
 
 class: middle center
 
-# Graphing some summarizations
+# Graphing distribution summaries
 
-```{r allplots,  out.height="100%"}
+```{r allplotspng}
 ```
 
 ---
@@ -57,7 +57,7 @@ class: middle center
 # Boxplot not suitable for summarizing multi-modal distributions
 
 
-```{r question1, out.height="100%"}
+```{r question1png}
 ```
 
 ---
