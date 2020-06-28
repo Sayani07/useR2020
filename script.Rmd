@@ -12,87 +12,64 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Slide 1
 
-Hello everyone! It is very interesting that this part of the work that I am going to present today actually originated from the questions and discussions during my Mid candidature presentation. So thank you so much all of you for your questions and suggestions that day. In the next 20 minutes, I will share with you a quick recap of my research work so that we all know how the current work fits in that framework. I really hope you enjoy the talk today and the questions and discussions along the way lead to expanding and improving the existing ideas. There is a fun live quiz for you along the way, which is basically for testing myself on how well I have been able to formalize the reasonings. This is a joint work with my thesis supervisors Di and Rob.
+# Slide1
 
-## Slide 2
+Hello everyone! Hope you are well and this unprescedented situation will be over us soon. My name is Sayani Gupta. I am pursuing my PhD at the Department of Econometrics and Business Statistics at Monash University, Australia and today I will be talking to you about highest density regions and how to go about plotting them in the ggplot2 framework. This is an R package that was developed during rOpenSci 2019 held at Sydney, Australia.
 
-So I have been working on visualizing probability distributions across bivarite cyclic granularities. All the ideas presented  have been implemented in the open-source R package `gravitas`.
+# Slide 2
 
-## Slide 3
-
-So what are time granularities? They are different time deconstructions that can assist in exploration of temporal data sets. Linear time granularities respect the linear progression of time like hours, days and weeks and generally represented through a line plot going from past to future. Cyclic granularities like hour of the day or day of the week could be used to explore periodicities in the data. These granularities can be considered to be categorical variables (ordered or unordered) which induces a grouping of the observations, that is, going from linear to cyclic we have a scenario where we have multiple observations for each category. Hence, there is a need to summarize them.
-
-## Slide 4
-
-In these cases, it is common to see aggregates of a numeric response variable or just one particular summary statistic. But studying aggregates hides the distributions of the response variable at finer temporal scales. Hence we decided to look at the probability distribution to summarize these multiple observations. 
+There are several ways to summarize a distribution using both Kernel density estimates and descriptive statistics. Descriptive statistics based displays include box plots or different variations of it like notched box plots, letter-value box plots or quantile plots which display quantiles instead of quartiles in a traditional boxplot. Kernel density based plots for displaying a distribution could be violin plots and ridge line plots. Kernel density estimates provide more detailed information about the distribution but depend on smoothing parameters and hence can vary for the same data set. The descriptive statistics based methods do not allow us to see the shape, skewness, nature of the tail or multi-modality all at once with so much clarity as the former, but they do avoid clutter and help us to focus on some specific properties of the data and hence are very desirable for exploratory purposes. Also, the summaries based on descriptive statistics remain free of any tuning parameters or Kernels, which is sometimes more desirable for exploration.
 
 
-There are several possibilities at your disposal for visualizing statistical distributions. Traditional methods of plotting distributions include box, violin or ridge plots, whereas more recent forms of visuslizing distributions include Letter values, quantiles or highest density region plots.
+Choice of plots are dictated by the statistical transformations and geometric objects used for the visualization. For example, for a simple box plot which displays a compact distribution with median, quartiles, hinges and extreme outliers, the statistical transformations include the five number summary and the geometries are the lines, boxes or points used to represent them.
+
+# Slide 3
+
+Summarizing a distribution tend to put forward different features of the distribution and hides other ones and hence it is often useful to display them in unison. For example, although boxplots are really cool compact displays, they are not useful for displaying multimodal distributions as you can see from these plots.
+
+
+# Slide 4
+
+Highest density regions in these cases are one of the the most appropriate subsets to use to summarize a probability distribution. There are several statistical methods to summarize a distribution by region of the sample space covering certain probability. For example, in a traditional boxplot, the central box bounded by the interquartile range represents 50% coverage and whiskers represents 99% coverage for large samples. The method of summarizing a distribution using highest density regions are useful for analyzing multimodal distributions. 
+
+Explain HDR
+
+
+# Slide 5
+
+The R package hdrcde authored by Rob Hyndman provides tools for computing highest density regions in one and two dimensions. We illustrate this by exploring the data set faithful which contains the waiting time and duration of eruptions for the old faithful geyser in the Yellowstone National Park, USA.
+
+The HDR boxplot displaying the 99% and 50% highest density regions also shows the local mode in each of the regions. For this example, it implies that the eruption times are likely to be around 4.5 minutes or 2 minutes but rarely for around 3 minutes. This insight would not have been apparent through a boxplot.
+
+A HDR scatterplot produces a scatterplot where the points are coloured according to the bivariate HDRs in which they fall and a HDR conditional density plots  highest density regions for a conditional density. estimate.
 
 
 ## Slide 5
 
-The data structure considered for our visualisation is a tsibble, a data structure developed by the former PhD student Earo Wang. A tsibble consists of an index, key and measured variables. An index is a variable with inherent ordering from past to present and a key is a set of variables that define observational units over time. In a tsibble, each observation (row) is uniquely identified by index and key. Since, any cyclic granularity is a function of the index set, we extend the tsibble to obtain columns corresponding to cyclic granularities. And why are we interested to look at multiple cyclic granularities?  Exploratory Data analysis developed by **John Tukey** encourages us to look at data from multiple perspectives and looking at multiple cyclic granularities would help us do that. More than 2 cyclic granularities could be visualised, but we focus on visualizing two cyclic granularities ($C_i$ and $C_j$) by representating it in a 2D space, where C_i maps to categories $\{A_1, A_2, \dots, A_K\}$ and C_j maps to categories $\{B_1, B_2, \dots, B_L\}$ 
+As I stated earlier that it is often useful to display such summary plots in unison to have more involved perspectives about the data. HDR is not yet implemented in the ggplot2 framework, which provides excellent flexibility in terms of adding new elements to a display and customisation. Hence, we decided to extend the functionality of ggplot2 to be able to use HDR in the ggplot2 framework.
 
-
-For relating data space to the graphic space through layered grammar of graphics using one numeric response variable and two cyclic granularities, we employ the facet-ing approach. is a mechanism for splitting the data into subsets, then plotting each subset in a different panel. We map $C_i$ to facets, so each $C_i$ label is a facet and for each facet, $C_j$ is mapped on the x-axis and the response variable is mapped on the y-axis. 
-
-Now suppose we have $N_C$ cyclic granularities, the number of displays that you can make becomes too large to conume too soon. Just with 10 cyclic granularities, we  will have 10 choose 2, which is 45 displays to look and analyze. Without a systematic framework, it is difficult for an analyst to do that. So we will essentially try to do that and employ a strategy which will help us to screen only those visualizations which are interesting.
 
 ## Slide 6
 
-Now, to start with not all pairs are compatible to bring out the best of exploration. For example, take the first one as an example,here facets show month of the year and x-axis show day of the year - we are unable to compare the distribution across facets because many of their combinations are missing. This is also intuitive because the first day of the month can never be the 2nd or 3rd day of the year. These pairs which lead to structurally empty combinations are called clashes. The pairs that are compatible with each other  are called harmonies. For the second plot, every day of the week corresponds to every month of the year and vice versa. Hence there are no empty combinations. Still for large $N_C$, there could possibly be many harmonies. Can we rank them in order of importance? Can we scrape some harmonies for which variations in the response variable is not significant enough?
-
+Hence, we started with R package gghdr. The key elements of any graphic made in ggplot2 are geoms and stats. The "stats" which involves the statistical transformation of the data is inherited from the R package "hdrcde" and the "geoms" are defined through a class defined by ggproto function to specify the number of attributes and functions that describe how data should be drawn on a plot.
 
 ## Slide 7
 
-So let's see if we can do that. So all these four graphs displays harmonies. Can I have you to rank them from most to least interesting? I know here the interesting word is not well defined, but I would want you to rank them according to your definition of interestng. Take a couple of minutes and fill up the poll. 
+In package gghdr, we have different geoms for graphing HDRs. For example, the code here on the right side uses the geom_hdr_boxplot function to draw HDR boxplots. Similarly, geom_hdr_rug and hdr_bin could be used to plot HDR rug plots and scatter plots respectively. As you could see all these codes are very similar to any ggplot2 code.
 
 ## Slide 8
 
-Time for some interaction! Can I have all of you think for a couple of minutes about their ranking rationale here? What all did you think while ranking them?
+With ggplot2, we have immense flexibility adding different elements or layers to thr plot. Here, I have plotted HDR box and jitter 
 
 ## Slide 9
 
-This is what we thought while ranking them!
+Explain what you see by combining these plots.
 
-Gestalt theory suggests that when items are placed in close proximity, people assume that they are in the same group because they are close to one another and apart from other groups. Hence, given our data structure, it is easier for our eyes to capture differences between categories within a group rather than categories across groups. Displays that capture more variation within different categories in the same group would deem to be important to our eyes. Hence, the idea here is to rank a harmony pair higher if this variation between different levels of the x-axis variable is higher on an average across all levels of facet variables. One potential way is to compute pairwise differences between distributions across different x-axis categories within a group. Also, since we are looking at time here, which is ordered, even within a group we aim to look at ordered pairwise differences. Did you think with more facet levels, chances are more that you will find them interesting? You are right. So there is a need to normalize for the number of levels. Would you even consider looking at all of them given a choice? May be you won't if there is no significant within or between group variation.
+## Slide 10
 
-## Slide 10 (not yet there)
-
-Considering all of this in our metric MMPD(Median Maximum Pairwise distance)
-
-$$\frac{median_{k \in \{1, 2, \ldots, K\}}(\operatorname*{max}_{s, t \in \{1, 2, \ldots, L\}}(\frac{JSD(p_s, p_t) - a_k}{b_k})}{log(K)}$$
-
-where JSD is the Jensen Shannon distances between probability distribution $p_s$
-and $p_t$ of the $s^{th}$ and $t^{th}$ x-axis category and $a_k$ and $b_k$ are
-the normalizing constants for the $k^{th}$ facet category. 
-
-The thresholds are chosen using ordered permutation tests.
+The authors of this package are Mitch, Stephen, Ryo, myself, Thomas and Emi. We all met during rOpensci and developed this package.
 
 
-## Slide 11
+# Slide 11
 
-Here I show the harmonies from highest to lowest MMPD and reveal the ranks that 
-we obtain using our metric. How many of you got something else and want to argue
-if their ranking is better? Bring it on :)
-
-## Slide 12
-
-We can further reduce the number of harmonies to visualise using a thresholds 
-computed using permutation tests and as we can see we are left with few harmonies
-from the long list of cyclic granularities we might have.
-
-
-## Slide 13
- 
-Furthermore, we can see here that the number of levels do not have a role to play in the value of MMPD, which essentially implies normalization has been done to eliminate the impact of different levels.
-
-
-# Slide 14
-
-So we started with $6$ cyclic granularities and hence $6 \choose 2$ =  $30$ displays, reduced to 16 displays using the concept of harmonies and clashes and then reduce it futher to $6$ using the threshold - moreover ranked them in order of importance. Now 6 displays are much easier to analyze than 30, isn't it?
-
-# Slide 15
-
-Thank you all for listening.
+For more information on the package, please visit the github page or the vignette. Tge slides are created using Rmarkdown, /knitr, xaringan and xaringanthemer. Thank you so much for listening.

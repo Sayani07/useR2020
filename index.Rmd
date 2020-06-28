@@ -62,6 +62,13 @@ class: middle center
 
 ---
 
+background-image: url("images/hdr_paper.png")
+
+background-position: center
+background-size: contain
+
+
+---
 # Highest Density Region (HDR) plots
 
 <font size = 5> If $f(x)$ is the density function of a random variable $X$, then the 100 $(1 -\alpha)$ HDR is the subset $R(f_\alpha)$ of the sample space of $X$ such that $R(f_\alpha) = \{x: f(x) \geq f_\alpha\}$, where $f_\alpha$ is the largest constant such that $Pr(X \in R(f_\alpha)) \geq 1-\alpha)$.
