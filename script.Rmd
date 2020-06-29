@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Slide1
 
-Hello everyone! Hope you are well and this unprecedented situation will be over us soon. My name is Sayani Gupta. I am pursuing my PhD at the Department of Econometrics and Business Statistics at Monash University, Australia and today I will be talking to you about highest density regions and how to go about plotting them in the ggplot2 framework. This is an R package that was developed during rOpenSci 2019 held at Sydney, Australia.
+Hello everyone! Hope you are well and this unprecedented situation will be over us soon. My name is Sayani Gupta. I am pursuing my PhD at the Department of Econometrics and Business Statistics at Monash University, Australia and today I will be talking to you about highest density regions and how to go about plotting them in the ggplot2 framework. This is an R package that was developed during rOpenSci 2019 held in Sydney, Australia.
 
 # Slide 2
 

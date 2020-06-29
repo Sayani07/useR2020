@@ -40,7 +40,7 @@ class: middle center
 ![](images/allplots.png)&lt;!-- --&gt;
 
 ---
-class: middle center
+class: top left
 
 # Different summarization expose different features
 
@@ -105,7 +105,7 @@ faithful %&gt;% as_tibble
 
 # Graphing HDRs using R package hdrcde
 
-![](images/hdrcde.png)&lt;!-- --&gt;
+&lt;img src="images/allplots1png.png" width="90%" /&gt;
 ---
 # Extending ggplot2
 
@@ -115,7 +115,7 @@ faithful %&gt;% as_tibble
 - need to extend the functionality of ggplot2
 
 ---
-class: top center
+class: top left
 
 # Package gghdr
 
@@ -194,7 +194,7 @@ faithful %&gt;%
 
 ]
 ---
-class: top center
+class: top left
 
 # Keep combining - HDR box + jitter
 
@@ -206,7 +206,7 @@ faithful %&gt;%
 *geom_hdr_boxplot(fill = c("blue")) + 
 *geom_jitter(aes(x = 0))
 ```
-
+- jitter to supplement the insight drawn from the HDR boxplot
 
 ]
 
@@ -214,8 +214,11 @@ faithful %&gt;%
 ![](index_files/figure-html/geom-hdr-box-jitter-1.png)&lt;!-- --&gt;
 ]
 
+
+
+
 ---
-class: top center
+class: top left
 
 # Keep combining - HDR scatter + HDR marginal
 
@@ -226,7 +229,12 @@ ggplot(aes(x = waiting, y = eruptions)) +
 * geom_point(aes(colour = hdr_bin(x = waiting, y = eruptions)))+
 * geom_hdr_rug()
 ```
+
+- Both bivariate and marginal HDRs displayed at once
+- Bimodality in both marginal and bivariate distributions
+
 ]
+
 
 .pull-right[
 

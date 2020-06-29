@@ -191,7 +191,7 @@ knitr::include_graphics("images/authors1.png")
 
 
 ##----hdrcde
-knitr::include_graphics("images/hdrcde.png")
+knitr::include_graphics("images/allplots1png.png")
 
 
 ##----falpha
