@@ -24,8 +24,8 @@
 class: center, middle, inverse, title-slide
 
 # gghdr: Graphing highest density regions <br> using grammar of graphics
-### <br> Sayani Gupta <br> <i class='fab fa-github'></i> Sayani07     <i class='fab fa-twitter' style='color:#6CADDE'></i> SayaniGupta07 <br><font> <a href="https://sayanigupta-useR2020.netlify.com/" class="uri">https://sayanigupta-useR2020.netlify.com/</a></small>
-### useR 2020
+### <br> Sayani Gupta <br> <i class='fab fa-github'></i> Sayani07     <i class='fab fa-twitter' style='color:#6CADDE'></i> SayaniGupta07 <br><font> <small><a href="https://sayanigupta-useR2020.netlify.com/" class="uri">https://sayanigupta-useR2020.netlify.com/</a></small>
+### <font size = "7"> useR! 2020
 
 ---
 
@@ -42,11 +42,16 @@ class: middle center
 ---
 class: middle center
 
-# Boxplot not suitable for summarizing multi-modal distributions
+# Different summarization expose different features
 
+.pull-left[
+- Boxplot not suitable for summarizing multi-modal distributions
+- often useful to display different summarization in unison
+]
 
-![](images/question1.png)&lt;!-- --&gt;
-
+.pull-right[
+![](index_files/figure-html/question1-1.png)&lt;!-- --&gt;
+]
 ---
 
 background-image: url("images/hdr_paper.png")
@@ -110,7 +115,7 @@ faithful %&gt;% as_tibble
 - need to extend the functionality of ggplot2
 
 ---
-class: middle top
+class: top center
 
 # Package gghdr
 
@@ -189,7 +194,7 @@ faithful %&gt;%
 
 ]
 ---
-class: center middle
+class: top center
 
 # Keep combining - HDR box + jitter
 
@@ -210,7 +215,7 @@ faithful %&gt;%
 ]
 
 ---
-class: center middle
+class: top center
 
 # Keep combining - HDR scatter + HDR marginal
 

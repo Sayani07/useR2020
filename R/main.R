@@ -119,8 +119,7 @@ updates %>%
   group_by(country) %>% 
   ggplot(aes(y = confirmed, x = country)) + 
   geom_hdr_boxplot(all.modes = TRUE) +
-  scale_fill_brewer(palette = "Dark2")  + theme_minimal() + geom_boxplot(color = "blue", alpha = 0.05) +
-  geom_density_line(color = "green", alpha = 0.1)
+  scale_fill_brewer(palette = "Dark2")  + theme_minimal() + geom_boxplot(color = "blue", alpha = 0.05) 
 
 ##----allplots
 
@@ -206,7 +205,7 @@ faithful %>% as_tibble()
 p1 <- ggplot(data = faithful, aes(x = eruptions)) + geom_density() + theme_remark()
 
 p2 <- ggplot(data = faithful, aes(y = eruptions)) + 
-  geom_boxplot() + theme_remark() 
+  geom_boxplot() + theme_remark()  + coord_flip()
 
 ggarrange(p1, p2, nrow = 2, ncol = 1)
 
