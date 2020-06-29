@@ -44,25 +44,32 @@ knitr::read_chunk('R/theme.R')
 
 ```
 
-class: middle center
+class: top left
 
 # Graphing distribution summaries
 
+
+.left-column[
+- several ways to summarize a distribution
+- R package ggdist for visualizing distributions and uncertainty
+]
+
+.right-column[
 ```{r allplotspng}
 ```
-
+]
 ---
 class: top left
 
 # Different summarization expose different features
 
-.pull-left[
+.left-column[
 - Boxplot not suitable for summarizing multi-modal distributions
 - often useful to display different summarization in unison
 ]
 
-.pull-right[
-```{r question1}
+.right-column[
+```{r question1png}
 ```
 ]
 ---
