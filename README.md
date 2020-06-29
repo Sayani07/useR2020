@@ -1,1 +1,1 @@
-My talk at NUMBATS on choosing harmonies for visualizing probability distribution
+useR! 2020 talk
