@@ -47,7 +47,18 @@ hdr.boxplot(faithful$eruptions)
 
 ggplot(data = faithful, 
        aes(y = eruptions)) + 
-  geom_hdr_boxplot(fill = c("blue")) 
+  geom_hdr_boxplot() +
+  theme_remark()
+
+##----geom-hdr-boxplot-group
+
+ggplot(data = mpg, 
+       aes(y = hwy, fill = as.factor(cyl))) + 
+  geom_hdr_boxplot() + theme_remark() +
+  theme(legend.position = "right") + 
+  labs(y = "highway miles per gallon", 
+       fill = "number of cylinders") 
+
 
 
 ##----geom-hdr-box-jitter
@@ -68,7 +79,7 @@ ggplot(data = faithful, aes(x = waiting, y = eruptions)) +
 ##----hdr-scatter
 
 ggplot(data = faithful, aes(x = waiting, y = eruptions)) +
-  geom_point(aes(colour = hdr_bin(x = waiting, y = eruptions))) + scale_colour_viridis_d(direction = -1) + theme_remark()
+  geom_point(aes(colour = hdr_bin(x = waiting, y = eruptions))) + scale_colour_viridis_d(direction = -1) + theme_remark() 
 
 ##----combo
 

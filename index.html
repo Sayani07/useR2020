@@ -170,6 +170,27 @@ ggplot(faithful, aes(y = eruptions)) +
 ]
 
 ---
+class: top left
+
+# HDR boxplots
+
+.pull-left[
+```r
+mpg %&gt;%
+  ggplot(aes(y = hwy,   
+             fill = as.factor(cyl))) +
+  geom_hdr_boxplot()
+```
+- create separate HDR boxplots for different groups
+- shade mapped to probability
+- color mapped to groups
+- cars with 6 cylinders are bimodally distributed
+]
+
+.pull-right[
+![](index_files/figure-html/geom-hdr-boxplot-group-1.png)&lt;!-- --&gt;
+]
+---
 
 # HDR rug plots and scatter plots
 
